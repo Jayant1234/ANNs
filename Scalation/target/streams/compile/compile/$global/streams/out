@@ -1,0 +1,4 @@
+[0m[[0m[33mwarn[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\src\main\scala\RegressionProblem\regression.scala:158:16: scalation.linalgebra.VectoD and Double are unrelated: they will most likely always compare unequal[0m
+[0m[[0m[33mwarn[0m] [0m[0m			if (new_qof != n1) {[0m
+[0m[[0m[33mwarn[0m] [0m[0m			            ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m

@@ -1,0 +1,27 @@
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mInitial source changes: [0m
+[0m[[0m[0mdebug[0m] [0m[0m	removed:Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0m	added: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0m	modified: Set(D:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\src\main\scala\RegressionProblem\regression.scala)[0m
+[0m[[0m[0mdebug[0m] [0m[0mInvalidated products: Set(D:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\target\scala-2.12\classes\RegressionProblem\IllegalChoiceException.class, D:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\target\scala-2.12\classes\RegressionProblem\RegressionTest.class, D:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\target\scala-2.12\classes\RegressionProblem\RegressionTest$delayedInit$body.class, D:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\target\scala-2.12\classes\RegressionProblem\Exception1.class, D:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\target\scala-2.12\classes\RegressionProblem\RegressionTest$.class, D:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\target\scala-2.12\classes\RegressionProblem\cross_validation.class)[0m
+[0m[[0m[0mdebug[0m] [0m[0mExternal API changes: API Changes: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mModified binary dependencies: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mInitial directly invalidated classes: Set(RegressionProblem.IllegalChoiceException, RegressionProblem.Exception1, RegressionProblem.RegressionTest, RegressionProblem.cross_validation)[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mSources indirectly invalidated by:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	product: Set(D:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\src\main\scala\RegressionProblem\regression.scala)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	binary dep: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0m	external source: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll sources are invalidated.[0m
+[0m[[0m[0mdebug[0m] [0m[0mRecompiling all 1 sources: invalidated sources (1) exceeded 50.0% of all sources[0m
+[0m[[0m[0minfo[0m] [0m[0mCompiling 1 Scala source to D:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\target\scala-2.12\classes ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting org.scala-sbt:compiler-bridge_2.12:1.2.5:compile for Scala 2.12.8[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting org.scala-sbt:compiler-bridge_2.12:1.2.5:compile for Scala 2.12.8[0m
+[0m[[0m[0mdebug[0m] [0m[0m[zinc] Running cached compiler 5cd3ed2c for Scala compiler version 2.12.8[0m
+[0m[[0m[0mdebug[0m] [0m[0m[zinc] The Scala compiler is invoked with:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-bootclasspath[0m
+[0m[[0m[0mdebug[0m] [0m[0m	C:\Program Files\Java\jre1.8.0_152\lib\resources.jar;C:\Program Files\Java\jre1.8.0_152\lib\rt.jar;C:\Program Files\Java\jre1.8.0_152\lib\sunrsasign.jar;C:\Program Files\Java\jre1.8.0_152\lib\jsse.jar;C:\Program Files\Java\jre1.8.0_152\lib\jce.jar;C:\Program Files\Java\jre1.8.0_152\lib\charsets.jar;C:\Program Files\Java\jre1.8.0_152\lib\jfr.jar;C:\Program Files\Java\jre1.8.0_152\classes;C:\Users\aashi\.ivy2\cache\org.scala-lang\scala-library\jars\scala-library-2.12.8.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-classpath[0m
+[0m[[0m[0mdebug[0m] [0m[0m	D:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\target\scala-2.12\classes;D:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\lib\scalation_database_2.12-1.6.jar;D:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\lib\scalation_mathematics_2.12-1.6.jar;D:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\lib\scalation_modeling_2.12-1.6.jar;D:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\lib\scalation_statistics_2.12-1.6.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mScala compilation took 5.800563942 s[0m
+[0m[[0m[0minfo[0m] [0m[0mDone compiling.[0m
