@@ -1,20 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:49:18: not enough arguments for constructor TranRegression: (x: scalation.linalgebra.MatriD, y: scalation.linalgebra.VectoD, fname_: scalation.analytics.Strings, tran: scalation.math.FunctionS2S, itran: scalation.math.FunctionS2S, technique: scalation.analytics.RegTechnique.RegTechnique)Perceptron.TranRegression.[0m
-[0m[[0m[31merror[0m] [0m[0mUnspecified value parameter itran.[0m
-[0m[[0m[31merror[0m] [0m[0m		val	tran_reg = new TranRegression (x, y, transform_function, transform_inverse)[0m
-[0m[[0m[31merror[0m] [0m[0m		   	           ^[0m
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:59:16: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Any[0m
-[0m[[0m[31merror[0m] [0m[0m required: Int[0m
-[0m[[0m[31merror[0m] [0m[0m				fs_cols += add_var[0m
-[0m[[0m[31merror[0m] [0m[0m				           ^[0m
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:60:33: Any does not take parameters[0m
-[0m[[0m[31merror[0m] [0m[0m				RSqNormal(j) = 100 * new_qof(0)	[0m
-[0m[[0m[31merror[0m] [0m[0m				                            ^[0m
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:61:30: Any does not take parameters[0m
-[0m[[0m[31merror[0m] [0m[0m				RSqAdj(j) = 100 * new_qof(7)[0m
-[0m[[0m[31merror[0m] [0m[0m				                         ^[0m
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:63:23: not enough arguments for constructor TranRegression: (x: scalation.linalgebra.MatriD, y: scalation.linalgebra.VectoD, fname_: scalation.analytics.Strings, tran: scalation.math.FunctionS2S, itran: scalation.math.FunctionS2S, technique: scalation.analytics.RegTechnique.RegTechnique)Perceptron.TranRegression.[0m
-[0m[[0m[31merror[0m] [0m[0mUnspecified value parameter itran.[0m
-[0m[[0m[31merror[0m] [0m[0m				val tran_reg_cv = new TranRegression(x_cv, y, transform_function, transform_inverse)[0m
-[0m[[0m[31merror[0m] [0m[0m				                  ^[0m
-[0m[[0m[31merror[0m] [0m[0m5 errors found[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:69:5: not found: value RsqCV[0m
+[0m[[0m[31merror[0m] [0m[0m				RsqCV(j) = 100 * cv_result(tran_reg_cv.index_rSq).mean[0m
+[0m[[0m[31merror[0m] [0m[0m				^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

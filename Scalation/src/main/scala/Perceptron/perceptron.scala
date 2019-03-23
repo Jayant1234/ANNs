@@ -65,14 +65,14 @@ object Project2 extends App {
 				RSqAdj(j) = 100 * new_qof(7)
 				val x_cv = x.selectCols(fs_cols.toArray)	// Obtaining X-matrix for selected features
 				val tran_reg_cv = new TranRegression(x_cv, y, tran = transform_function, itran = transform_inverse)
-//				val cv_result = 100 * tran_reg_cv.crossVal()
-//				RsqCV(j) = 100 * cv_result(rg.index_rSq).mean
+				val cv_result = tran_reg_cv.crossVal()
+				RSqCV(j) = 100 * cv_result(tran_reg_cv.index_rSq).mean
 			}		
 		}	
-		val plot_mat = new MatrixD (2, x.dim2-1)
+		val plot_mat = new MatrixD (3, x.dim2-1)
 		plot_mat.update(0, RSqAdj(1 until x.dim2))
 		plot_mat.update(1, RSqNormal(1 until x.dim2))
-//		plot_mat.update(2, RSqCV(1 until x.dim2))
+		plot_mat.update(2, RSqCV(1 until x.dim2))
 		new PlotM(n, plot_mat, lines=true).saveImage("tran_regression.png")
 		banner ("Successfully implemented Transformed Regression!")
 	}
