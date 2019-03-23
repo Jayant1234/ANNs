@@ -6,18 +6,76 @@
  */
 
 package Perceptron
+import scalation.columnar_db.Relation
+import scala.math.{exp, log, sqrt}
+import scalation.math.{FunctionS2S, sq}
+import scalation.util.banner
+import scala.collection.mutable.Set
+import scalation.linalgebra._
+import scalation.analytics._
+import scalation.plot.PlotM
+import RegTechnique._
+
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+/** Defining IllegalChoiceException class
+*/
+class IllegalChoiceException(s: String) extends Exception(s){}
+
+class Exception1{
+	@throws(classOf[IllegalChoiceException])
+	def validate(choice: Int){
+		if((choice < 0) || (choice > 11)) {
+			throw new IllegalChoiceException("Invalid Choice.")
+		}
+	}
+}
+
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+/** Defining TranRegression class to input 'tran' and 'itran' as parameters
+*/
+class TranRegression (x: MatriD, y: VectoD, fname_ : Strings = null,
+                      tran: FunctionS2S , itran: FunctionS2S,
+                      technique: RegTechnique = QR)
+      extends Regression (x, y.map (tran), fname_, null, technique) {}
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-/** The 'RegressionTest' object uses the defined cross-validation class, pre-defined 
-* MatrixD and Regression classes to perform multiple regressions and subsequent analysis 
+/** The 'PerceptronTest' object uses the pre-defined MatrixD, Regression, Perceptron
+* NeuralNet_3L and NeuralNet_XL classes to perform regression and subsequent analysis 
 * on different numerical datasets, in the 'data' folder.  
 *  > "sbt run" in the Scalation folder containing the build file to run the program.
 * User gets two choices, once, to run on the dataset of his/her choice and again, to 
 * choose the model to build the R2-RBar2-RCV2 graph on.
 */			
-object PerceptronTest extends App {
+object Project2 extends App {
 
+	def tran_regression(x: MatriD, y: VectoD, transform_function: FunctionS2S, transform_inverse: FunctionS2S){
+		banner ("Implementing Transformed Regression... ")
+		val	tran_reg = new TranRegression (x, y, tran = transform_function, itran = transform_inverse)
+		val fs_cols = Set(0)				// Selected features 
+		val RSqNormal = new VectorD (x.dim2)
+		val RSqAdj = new VectorD (x.dim2) 
+		val RSqCV = new VectorD (x.dim2)
+		val n = VectorD.range(1, x.dim2)
 
+		for (j <- 1 until x.dim2){
+			val (add_var, new_param, new_qof) = tran_reg.forwardSel(fs_cols, false)
+			if (add_var != -1) {
+				fs_cols += add_var
+				RSqNormal(j) = 100 * new_qof(0)	
+				RSqAdj(j) = 100 * new_qof(7)
+				val x_cv = x.selectCols(fs_cols.toArray)	// Obtaining X-matrix for selected features
+				val tran_reg_cv = new TranRegression(x_cv, y, tran = transform_function, itran = transform_inverse)
+//				val cv_result = 100 * tran_reg_cv.crossVal()
+//				RsqCV(j) = 100 * cv_result(rg.index_rSq).mean
+			}		
+		}	
+		val plot_mat = new MatrixD (2, x.dim2-1)
+		plot_mat.update(0, RSqAdj(1 until x.dim2))
+		plot_mat.update(1, RSqNormal(1 until x.dim2))
+//		plot_mat.update(2, RSqCV(1 until x.dim2))
+		new PlotM(n, plot_mat, lines=true).saveImage("tran_regression.png")
+		banner ("Successfully implemented Transformed Regression!")
+	}
 	
 	def main(){
 		// Giving user the choice to select from ten datasets, or to give data path to own CSV file
@@ -49,6 +107,47 @@ object PerceptronTest extends App {
 			dataset.update(column_names(i), mean_col.toString(), "") 		// Updating blank spaces with mean of column
 		} 
 		
+		// Giving user choice to execute model of their choice
+		println("-"*75)
+		println ("Select model:\n\t 1. Transformed Regression \n\t 2. Perceptron \n\t 3. NeuralNet_3L \n\t 4. NeuralNet_XL")
+		println("-"*75)
+		
+		val model = scala.io.StdIn.readLine()
+		if (model == "1") {
+			val (x_initial, y) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
+			val x = VectorD.one (x_initial.dim1) +^: x_initial	// Appending 1 column to x
+			println("-"*75)
+			println ("Select Transform Function:\n\t 1. log \n\t 2. sqrt \n\t 3. ~^2 \n\t 4. exp")
+			println("-"*75)
+			val function_choice = scala.io.StdIn.readLine()
+			if (function_choice == "1"){
+				tran_regression(x, y, transform_function = log, transform_inverse = exp)	// Implementing Transformed Regression Model with 'log' transform function
+			}
+			else if (function_choice == "2"){
+				tran_regression(x, y, transform_function = sqrt _ , transform_inverse = sq _)	// Implementing Transformed Regression Model with 'sqrt' transform function
+			}
+			else if (function_choice == "3"){
+				tran_regression(x, y, transform_function = sq, transform_inverse = sqrt _)	// Implementing Transformed Regression Model with 'sq' transform function
+			}
+			else if (function_choice == "4"){
+				tran_regression(x, y, transform_function = exp, transform_inverse = log)	// Implementing Transformed Regression Model with 'exp' transform function
+			}
+			else {
+				println("Invalid choice!")
+			}
+		}
+		else if (model == "2") {
 
+		}
+		else if (model == "3") {
+
+		}
+		else if (model == "4") {
+
+		}
+		else {
+			println("Invalid choice!")
+		}
+	}
 	main()
 }

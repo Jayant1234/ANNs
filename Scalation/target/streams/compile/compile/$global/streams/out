@@ -1,4 +1,20 @@
-[0m[[0m[33mwarn[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\CSCI-6360-Project01\Scalation\src\main\scala\RegressionProblem\regression.scala:158:16: scalation.linalgebra.VectoD and Double are unrelated: they will most likely always compare unequal[0m
-[0m[[0m[33mwarn[0m] [0m[0m			if (new_qof != n1) {[0m
-[0m[[0m[33mwarn[0m] [0m[0m			            ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:49:18: not enough arguments for constructor TranRegression: (x: scalation.linalgebra.MatriD, y: scalation.linalgebra.VectoD, fname_: scalation.analytics.Strings, tran: scalation.math.FunctionS2S, itran: scalation.math.FunctionS2S, technique: scalation.analytics.RegTechnique.RegTechnique)Perceptron.TranRegression.[0m
+[0m[[0m[31merror[0m] [0m[0mUnspecified value parameter itran.[0m
+[0m[[0m[31merror[0m] [0m[0m		val	tran_reg = new TranRegression (x, y, transform_function, transform_inverse)[0m
+[0m[[0m[31merror[0m] [0m[0m		   	           ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:59:16: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Any[0m
+[0m[[0m[31merror[0m] [0m[0m required: Int[0m
+[0m[[0m[31merror[0m] [0m[0m				fs_cols += add_var[0m
+[0m[[0m[31merror[0m] [0m[0m				           ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:60:33: Any does not take parameters[0m
+[0m[[0m[31merror[0m] [0m[0m				RSqNormal(j) = 100 * new_qof(0)	[0m
+[0m[[0m[31merror[0m] [0m[0m				                            ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:61:30: Any does not take parameters[0m
+[0m[[0m[31merror[0m] [0m[0m				RSqAdj(j) = 100 * new_qof(7)[0m
+[0m[[0m[31merror[0m] [0m[0m				                         ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:63:23: not enough arguments for constructor TranRegression: (x: scalation.linalgebra.MatriD, y: scalation.linalgebra.VectoD, fname_: scalation.analytics.Strings, tran: scalation.math.FunctionS2S, itran: scalation.math.FunctionS2S, technique: scalation.analytics.RegTechnique.RegTechnique)Perceptron.TranRegression.[0m
+[0m[[0m[31merror[0m] [0m[0mUnspecified value parameter itran.[0m
+[0m[[0m[31merror[0m] [0m[0m				val tran_reg_cv = new TranRegression(x_cv, y, transform_function, transform_inverse)[0m
+[0m[[0m[31merror[0m] [0m[0m				                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m5 errors found[0m
