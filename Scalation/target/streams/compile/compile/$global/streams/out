@@ -1,4 +1,11 @@
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:69:5: not found: value RsqCV[0m
-[0m[[0m[31merror[0m] [0m[0m				RsqCV(j) = 100 * cv_result(tran_reg_cv.index_rSq).mean[0m
-[0m[[0m[31merror[0m] [0m[0m				^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:210:40: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : scalation.linalgebra.VectoD => scalation.linalgebra.VectoD[0m
+[0m[[0m[31merror[0m] [0m[0m required: scalation.analytics.AFF[0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_3l(x, y, activation_f0 = tanhV _, hp)	// Implementing NeuralNet_3L with 'tanh' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:213:40: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Double => Double[0m
+[0m[[0m[31merror[0m] [0m[0m required: scalation.analytics.AFF[0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_3l(x, y, activation_f0 = gaussian _, hp)	// Implementing NeuralNet_3L with 'gaussian' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m

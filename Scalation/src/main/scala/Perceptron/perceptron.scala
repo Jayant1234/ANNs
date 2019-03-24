@@ -9,12 +9,14 @@ package Perceptron
 import scalation.columnar_db.Relation
 import scala.math.{exp, log, sqrt}
 import scalation.math.{FunctionS2S, sq}
+import scalation.analytics.ActivationFun._
 import scalation.util.banner
 import scala.collection.mutable.Set
 import scalation.linalgebra._
 import scalation.analytics._
 import scalation.plot.PlotM
 import RegTechnique._
+
 
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 /** Defining IllegalChoiceException class
@@ -37,6 +39,24 @@ class TranRegression (x: MatriD, y: VectoD, fname_ : Strings = null,
                       tran: FunctionS2S , itran: FunctionS2S,
                       technique: RegTechnique = QR)
       extends Regression (x, y.map (tran), fname_, null, technique) {}
+
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+/** Defining NeuralNet_3L class to input 'f0' activation function as parameter
+*/
+class NeuralNet_3L_Custom (x: MatriD, y: MatriD,
+                    private var nz: Int = 5,
+                    fname_ : Strings = null, hparam: HyperParameter,
+                    f0: AFF, f1: AFF = f_lreLU)
+      extends NeuralNet_3L(x, y, nz, fname_, hparam, f0, f1) {}
+
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+/** Defining NeuralNet_3L class to input 'f0' activation function as parameter
+*/
+class NeuralNet_XL_Custom (x: MatriD, y: MatriD,
+                    private var nz: Array [Int] = null,
+                    fname_ : Strings = null, hparam: HyperParameter = Optimizer.hp,
+                    f: Array [AFF] = Array)
+      extends NeuralNet_XL(x, y, nz, fname_, hparam, f) {}
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 /** The 'PerceptronTest' object uses the pre-defined MatrixD, Regression, Perceptron
@@ -75,6 +95,37 @@ object Project2 extends App {
 		plot_mat.update(2, RSqCV(1 until x.dim2))
 		new PlotM(n, plot_mat, lines=true).saveImage("tran_regression.png")
 		banner ("Successfully implemented Transformed Regression!")
+	}
+
+	def neuralnet_3l(x: MatriD, y: MatriD, activation_f0: AFF, hp: HyperParameter) {
+		banner("Implementing NeuralNet3L...")
+		val nn_3l = new NeuralNet_3L_Custom(x, y, f0 = activation_f0, hparam = hp)
+		nn_3l.train ().eval ()
+		val fit = nn_3l.fitA(0)
+		val fs_cols = Set(0)				// Selected features 
+		val RSqNormal = new VectorD (x.dim2)
+		val RSqAdj = new VectorD (x.dim2) 
+		val RSqCV = new VectorD (x.dim2)
+		val n = VectorD.range(1, x.dim2)
+
+		for (j <- 1 until x.dim2){
+			val (add_var, new_param, new_qof) = nn_3l.forwardSel(fs_cols, false)
+			if (add_var != -1) {
+				fs_cols += add_var
+				val x_cv = x.selectCols(fs_cols.toArray)	// Obtaining X-matrix for selected features
+				val nn_3l_cv = new NeuralNet_3L_Custom(x_cv, y, f0 = activation_f0, hparam = hp)
+				val cv_result = nn_3l_cv.crossVal()
+				RSqNormal(j) = 100 * new_qof(fit.index_rSq)
+				RSqAdj(j) = 100 * new_qof(fit.index_rSqBar)
+				RSqCV(j) = 100 * cv_result(fit.index_rSq).mean
+			}
+		}
+		val plot_mat = new MatrixD (3, x.dim2-1)
+		plot_mat.update(0, RSqAdj(1 until x.dim2))
+		plot_mat.update(1, RSqNormal(1 until x.dim2))
+		plot_mat.update(2, RSqCV(1 until x.dim2))
+		new PlotM(n, plot_mat, lines=true).saveImage("neuralnet_3l.png")
+		banner ("Successfully implemented NeuralNet_3L!")
 	}
 	
 	def main(){
@@ -124,10 +175,10 @@ object Project2 extends App {
 				tran_regression(x, y, transform_function = log, transform_inverse = exp)	// Implementing Transformed Regression Model with 'log' transform function
 			}
 			else if (function_choice == "2"){
-				tran_regression(x, y, transform_function = sqrt _ , transform_inverse = sq _)	// Implementing Transformed Regression Model with 'sqrt' transform function
+				tran_regression(x, y, transform_function = sqrt , transform_inverse = sq)	// Implementing Transformed Regression Model with 'sqrt' transform function
 			}
 			else if (function_choice == "3"){
-				tran_regression(x, y, transform_function = sq, transform_inverse = sqrt _)	// Implementing Transformed Regression Model with 'sq' transform function
+				tran_regression(x, y, transform_function = sq, transform_inverse = sqrt)	// Implementing Transformed Regression Model with 'sq' transform function
 			}
 			else if (function_choice == "4"){
 				tran_regression(x, y, transform_function = exp, transform_inverse = log)	// Implementing Transformed Regression Model with 'exp' transform function
@@ -140,7 +191,33 @@ object Project2 extends App {
 
 		}
 		else if (model == "3") {
+			val (x_initial, y_initial) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
+			val x = VectorD.one (x_initial.dim1) +^: x_initial	// Appending 1 column to x
+			val y = MatrixD (Seq (y_initial))
+			val hp = new HyperParameter
+			hp += ("eta", 0.1, 0.1)
+			hp += ("bSize", 10, 10)
+			hp += ("maxEpochs", 10000, 10000)
 
+			println("-"*75)
+			println ("Select Activation Function:\n\t 1. Identity \n\t 2. Rectified Linear Unit \n\t 3. Leaky Rectified Linear Unit \n\t 4. Sigmoid ")
+			println("-"*75)
+			val function_choice = scala.io.StdIn.readLine()
+			if (function_choice == "1"){
+				neuralnet_3l(x, y, activation_f0 = f_id, hp)	// Implementing NeuralNet_3L with 'id' activation function
+			}
+			else if (function_choice == "2"){
+				neuralnet_3l(x, y, activation_f0 = f_reLU, hp)	// Implementing NeuralNet_3L with 'reLU' activation function
+			}
+			else if (function_choice == "3"){
+				neuralnet_3l(x, y, activation_f0 = f_lreLU, hp)	// Implementing NeuralNet_3L with 'lreLU' activation function
+			}
+			else if (function_choice == "4"){
+				neuralnet_3l(x, y, activation_f0 = f_sigmoid, hp)	// Implementing NeuralNet_3L with 'sigmoid' activation function
+			}
+			else {
+				println("Invalid choice!")
+			}
 		}
 		else if (model == "4") {
 
