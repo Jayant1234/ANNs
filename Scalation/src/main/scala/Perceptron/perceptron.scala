@@ -50,12 +50,12 @@ class NeuralNet_3L_Custom (x: MatriD, y: MatriD,
       extends NeuralNet_3L(x, y, nz, fname_, hparam, f0, f1) {}
 
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-/** Defining NeuralNet_3L class to input 'f0' activation function as parameter
+/** Defining NeuralNet_XL class to input activation function array as parameter
 */
 class NeuralNet_XL_Custom (x: MatriD, y: MatriD,
                     private var nz: Array [Int] = null,
                     fname_ : Strings = null, hparam: HyperParameter = Optimizer.hp,
-                    f: Array [AFF] = Array)
+                    f: Array [AFF])
       extends NeuralNet_XL(x, y, nz, fname_, hparam, f) {}
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -126,6 +126,37 @@ object Project2 extends App {
 		plot_mat.update(2, RSqCV(1 until x.dim2))
 		new PlotM(n, plot_mat, lines=true).saveImage("neuralnet_3l.png")
 		banner ("Successfully implemented NeuralNet_3L!")
+	}
+
+	def neuralnet_xl(x: MatriD, y: MatriD, activation_f: Array [AFF], hp: HyperParameter) {
+		banner("Implementing NeuralNetXL...")
+		val nn_xl = new NeuralNet_XL_Custom(x, y, f = activation_f, hparam = hp)
+		nn_xl.train ().eval ()
+		val fit = nn_xl.fitA(0)
+		val fs_cols = Set(0)				// Selected features 
+		val RSqNormal = new VectorD (x.dim2)
+		val RSqAdj = new VectorD (x.dim2) 
+		val RSqCV = new VectorD (x.dim2)
+		val n = VectorD.range(1, x.dim2)
+
+		for (j <- 1 until x.dim2){
+			val (add_var, new_param, new_qof) = nn_xl.forwardSel(fs_cols, false)
+			if (add_var != -1) {
+				fs_cols += add_var
+				val x_cv = x.selectCols(fs_cols.toArray)	// Obtaining X-matrix for selected features
+				val nn_xl_cv = new NeuralNet_XL_Custom(x_cv, y, f = activation_f, hparam = hp)
+				val cv_result = nn_xl_cv.crossVal()
+				RSqNormal(j) = 100 * new_qof(fit.index_rSq)
+				RSqAdj(j) = 100 * new_qof(fit.index_rSqBar)
+				RSqCV(j) = 100 * cv_result(fit.index_rSq).mean
+			}
+		}
+		val plot_mat = new MatrixD (3, x.dim2-1)
+		plot_mat.update(0, RSqAdj(1 until x.dim2))
+		plot_mat.update(1, RSqNormal(1 until x.dim2))
+		plot_mat.update(2, RSqCV(1 until x.dim2))
+		new PlotM(n, plot_mat, lines=true).saveImage("neuralnet_xl.png")
+		banner ("Successfully implemented NeuralNet_XL!")
 	}
 	
 	def main(){
@@ -200,19 +231,17 @@ object Project2 extends App {
 			hp += ("maxEpochs", 10000, 10000)
 
 			println("-"*75)
-			println ("Select Activation Function:\n\t 1. Identity \n\t 2. Rectified Linear Unit \n\t 3. Leaky Rectified Linear Unit \n\t 4. Sigmoid ")
+			println ("Select Activation Function:\n\t 1. Rectified Linear Unit \n\t 2. Leaky Rectified Linear Unit \n\t 3. Sigmoid ")
 			println("-"*75)
 			val function_choice = scala.io.StdIn.readLine()
+
 			if (function_choice == "1"){
-				neuralnet_3l(x, y, activation_f0 = f_id, hp)	// Implementing NeuralNet_3L with 'id' activation function
-			}
-			else if (function_choice == "2"){
 				neuralnet_3l(x, y, activation_f0 = f_reLU, hp)	// Implementing NeuralNet_3L with 'reLU' activation function
 			}
-			else if (function_choice == "3"){
+			else if (function_choice == "2"){
 				neuralnet_3l(x, y, activation_f0 = f_lreLU, hp)	// Implementing NeuralNet_3L with 'lreLU' activation function
 			}
-			else if (function_choice == "4"){
+			else if (function_choice == "3"){
 				neuralnet_3l(x, y, activation_f0 = f_sigmoid, hp)	// Implementing NeuralNet_3L with 'sigmoid' activation function
 			}
 			else {
@@ -220,6 +249,54 @@ object Project2 extends App {
 			}
 		}
 		else if (model == "4") {
+			val (x_initial, y_initial) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
+			val x = VectorD.one (x_initial.dim1) +^: x_initial	// Appending 1 column to x
+			val y = MatrixD (Seq (y_initial))
+			val hp = new HyperParameter
+			hp += ("eta", 0.1, 0.1)
+			hp += ("bSize", 10, 10)
+			hp += ("maxEpochs", 10000, 10000)
+
+			println("-"*75)
+			println ("Select Activation Function for 1st Layer:\n\t 1. Rectified Linear Unit \n\t 2. Leaky Rectified Linear Unit \n\t 3. Sigmoid ")
+			println("-"*75)
+			val function_1_choice = scala.io.StdIn.readLine()
+
+			println("-"*75)
+			println ("Select Activation Function for 2nd Layer:\n\t 1. Rectified Linear Unit \n\t 2. Leaky Rectified Linear Unit \n\t 3. Sigmoid ")
+			println("-"*75)
+			val function_2_choice = scala.io.StdIn.readLine()
+
+			if (function_1_choice == "1" && function_2_choice == "1"){
+				neuralnet_xl(x, y, activation_f=  Array (f_reLU, f_reLU, f_lreLU), hp)	// Implementing NeuralNet_XL with 'reLU' and 'reLU' activation functions
+			}
+			else if (function_1_choice == "1" && function_2_choice == "2"){
+				neuralnet_xl(x, y, activation_f=  Array (f_reLU, f_lreLU, f_lreLU), hp)	// Implementing NeuralNet_XL with 'reLU' and 'lreLU' activation functions
+			}
+			else if (function_1_choice == "1" && function_2_choice == "3"){
+				neuralnet_xl(x, y, activation_f= Array (f_reLU, f_sigmoid, f_lreLU), hp)	// Implementing NeuralNet_XL with 'reLU' and 'sigmoid' activation functions
+			}
+			else if (function_1_choice == "2" && function_2_choice == "1"){
+				neuralnet_xl(x, y, activation_f=  Array (f_lreLU, f_reLU, f_lreLU), hp)	// Implementing NeuralNet_XL with 'lrelu' and 'relu' activation function
+			}
+			else if (function_1_choice == "2" && function_2_choice == "2"){
+				neuralnet_xl(x, y, activation_f=  Array (f_lreLU, f_lreLU, f_lreLU), hp)	// Implementing NeuralNet_XL with 'lrelu' and 'lrelu' activation function
+			}
+			else if (function_1_choice == "2" && function_2_choice == "3"){
+				neuralnet_xl(x, y, activation_f=  Array (f_lreLU, f_sigmoid, f_lreLU), hp)	// Implementing NeuralNet_3L with 'lrelu' and 'sigmoid' activation function
+			}
+			else if (function_1_choice == "3" && function_2_choice == "1"){
+				neuralnet_xl(x, y, activation_f=  Array (f_sigmoid, f_reLU, f_lreLU), hp)	// Implementing NeuralNet_3L with 'sigmoid' and 'relu' activation function
+			}
+			else if (function_1_choice == "3" && function_2_choice == "2"){
+				neuralnet_xl(x, y, activation_f=  Array (f_sigmoid, f_lreLU, f_lreLU), hp)	// Implementing NeuralNet_3L with 'sigmoid' and 'lrelu' activation function
+			}
+			else if (function_1_choice == "3" && function_2_choice == "3"){
+				neuralnet_xl(x, y, activation_f= Array (f_sigmoid, f_sigmoid, f_lreLU), hp)	// Implementing NeuralNet_3L with 'sigmoid' and 'sigmoid' activation function
+			}
+			else {
+				println("Invalid choice!")
+			}
 
 		}
 		else {

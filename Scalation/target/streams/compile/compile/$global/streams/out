@@ -1,11 +1,80 @@
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:210:40: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : scalation.linalgebra.VectoD => scalation.linalgebra.VectoD[0m
-[0m[[0m[31merror[0m] [0m[0m required: scalation.analytics.AFF[0m
-[0m[[0m[31merror[0m] [0m[0m				neuralnet_3l(x, y, activation_f0 = tanhV _, hp)	// Implementing NeuralNet_3L with 'tanh' activation function[0m
-[0m[[0m[31merror[0m] [0m[0m				                                   ^[0m
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:213:40: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Double => Double[0m
-[0m[[0m[31merror[0m] [0m[0m required: scalation.analytics.AFF[0m
-[0m[[0m[31merror[0m] [0m[0m				neuralnet_3l(x, y, activation_f0 = gaussian _, hp)	// Implementing NeuralNet_3L with 'gaussian' activation function[0m
-[0m[[0m[31merror[0m] [0m[0m				                                   ^[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:58:38: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Array.type[0m
+[0m[[0m[31merror[0m] [0m[0m required: Array[scalation.analytics.AFF][0m
+[0m[[0m[31merror[0m] [0m[0m                    f: Array [AFF] = Array)[0m
+[0m[[0m[31merror[0m] [0m[0m                                     ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:271:45: not found: type f_reLU[0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_xl(x, y, activation_f= Array [f_reLU, f_reLU, f_lreLU], hp)	// Implementing NeuralNet_3L with 'id' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:271:53: not found: type f_reLU[0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_xl(x, y, activation_f= Array [f_reLU, f_reLU, f_lreLU], hp)	// Implementing NeuralNet_3L with 'id' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:271:61: not found: type f_lreLU[0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_xl(x, y, activation_f= Array [f_reLU, f_reLU, f_lreLU], hp)	// Implementing NeuralNet_3L with 'id' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:271:38: wrong number of type parameters for overloaded method value apply with alternatives:[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Unit,xs: Unit*)Array[Unit] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Double,xs: Double*)Array[Double] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Float,xs: Float*)Array[Float] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Long,xs: Long*)Array[Long] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Int,xs: Int*)Array[Int] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Char,xs: Char*)Array[Char] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Short,xs: Short*)Array[Short] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Byte,xs: Byte*)Array[Byte] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Boolean,xs: Boolean*)Array[Boolean] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  [T](xs: T*)(implicit evidence$2: scala.reflect.ClassTag[T])Array[T][0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_xl(x, y, activation_f= Array [f_reLU, f_reLU, f_lreLU], hp)	// Implementing NeuralNet_3L with 'id' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:274:45: not found: type f_reLU[0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_xl(x, y, activation_f= Array [f_reLU, f_lreLU, f_lreLU], hp)	// Implementing NeuralNet_3L with 'reLU' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:274:53: not found: type f_lreLU[0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_xl(x, y, activation_f= Array [f_reLU, f_lreLU, f_lreLU], hp)	// Implementing NeuralNet_3L with 'reLU' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:274:62: not found: type f_lreLU[0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_xl(x, y, activation_f= Array [f_reLU, f_lreLU, f_lreLU], hp)	// Implementing NeuralNet_3L with 'reLU' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                                         ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:274:38: wrong number of type parameters for overloaded method value apply with alternatives:[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Unit,xs: Unit*)Array[Unit] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Double,xs: Double*)Array[Double] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Float,xs: Float*)Array[Float] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Long,xs: Long*)Array[Long] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Int,xs: Int*)Array[Int] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Char,xs: Char*)Array[Char] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Short,xs: Short*)Array[Short] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Byte,xs: Byte*)Array[Byte] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Boolean,xs: Boolean*)Array[Boolean] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  [T](xs: T*)(implicit evidence$2: scala.reflect.ClassTag[T])Array[T][0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_xl(x, y, activation_f= Array [f_reLU, f_lreLU, f_lreLU], hp)	// Implementing NeuralNet_3L with 'reLU' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:277:45: not found: type f_reLU[0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_xl(x, y, activation_f= Array [f_reLU, f_sigmoid, f_lreLU], hp)	// Implementing NeuralNet_3L with 'lreLU' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:277:53: not found: type f_sigmoid[0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_xl(x, y, activation_f= Array [f_reLU, f_sigmoid, f_lreLU], hp)	// Implementing NeuralNet_3L with 'lreLU' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:277:64: not found: type f_lreLU[0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_xl(x, y, activation_f= Array [f_reLU, f_sigmoid, f_lreLU], hp)	// Implementing NeuralNet_3L with 'lreLU' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                                           ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:277:38: wrong number of type parameters for overloaded method value apply with alternatives:[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Unit,xs: Unit*)Array[Unit] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Double,xs: Double*)Array[Double] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Float,xs: Float*)Array[Float] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Long,xs: Long*)Array[Long] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Int,xs: Int*)Array[Int] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Char,xs: Char*)Array[Char] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Short,xs: Short*)Array[Short] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Byte,xs: Byte*)Array[Byte] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (x: Boolean,xs: Boolean*)Array[Boolean] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  [T](xs: T*)(implicit evidence$2: scala.reflect.ClassTag[T])Array[T][0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_xl(x, y, activation_f= Array [f_reLU, f_sigmoid, f_lreLU], hp)	// Implementing NeuralNet_3L with 'lreLU' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:280:46: not found: type f_lreLU[0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_xl(x, y, activation_f=  Array [f_lreLU, f_reLU, f_lreLU], hp)	// Implementing NeuralNet_3L with 'sigmoid' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                         ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:280:55: not found: type f_reLU[0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_xl(x, y, activation_f=  Array [f_lreLU, f_reLU, f_lreLU], hp)	// Implementing NeuralNet_3L with 'sigmoid' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:280:63: not found: type f_lreLU[0m
+[0m[[0m[31merror[0m] [0m[0m				neuralnet_xl(x, y, activation_f=  Array [f_lreLU, f_reLU, f_lreLU], hp)	// Implementing NeuralNet_3L with 'sigmoid' activation function[0m
+[0m[[0m[31merror[0m] [0m[0m				                                                          ^[0m
