@@ -40,9 +40,20 @@ class TranRegression (x: MatriD, y: VectoD, fname_ : Strings = null,
                       technique: RegTechnique = QR)
       extends Regression (x, y.map (tran), fname_, null, technique) {}
 
+
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+/** Defining Perceptron class to input 'hparam' and 'f1' as parameters
+*/
+
+class Perceptron_Custom (x: MatriD, y: VectoD,
+                  fname_ : Strings = null, hparam: HyperParameter,
+                  f1: AFF)
+      extends Perceptron (x, y, fname_, hparam){}
+
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 /** Defining NeuralNet_3L class to input 'f0' activation function as parameter
 */
+
 class NeuralNet_3L_Custom (x: MatriD, y: MatriD,
                     private var nz: Int = 5,
                     fname_ : Strings = null, hparam: HyperParameter,
@@ -95,6 +106,39 @@ object Project2 extends App {
 		plot_mat.update(2, RSqCV(1 until x.dim2))
 		new PlotM(n, plot_mat, lines=true).saveImage("tran_regression.png")
 		banner ("Successfully implemented Transformed Regression!")
+	}
+
+		
+	def perceptron(x: MatriD, y: VectoD, activation_f1: AFF, hp: HyperParameter ){
+	  banner ("Implementing Perceptron... ")
+		val	percep = new Perceptron_Custom (x, y, f1 = activation_f1, hparam = hp)
+	  percep.train ().eval ()
+		val fs_cols = Set(0)				// Selected features 
+		val RSqNormal = new VectorD (x.dim2)
+		val RSqAdj = new VectorD (x.dim2) 
+		val RSqCV = new VectorD (x.dim2)
+		val n = VectorD.range(1, x.dim2)
+
+		for (j <- 1 until x.dim2){
+			val (add_var, new_param, new_qof) = percep.forwardSel(fs_cols, false)
+			if (add_var != -1) {
+				fs_cols += add_var
+				val x_cv = x.selectCols(fs_cols.toArray)	// Obtaining X-matrix for selected features
+			//	val nn_j   = Perceptron (x_cols :^+ y, f1 = f_)
+				val percep_cv = new Perceptron_Custom(x_cv, y, f1 = activation_f1, hparam = hp)
+				val cv_result = percep_cv.crossVal()
+				RSqNormal(j) = 100 * new_qof(percep_cv.index_rSq)
+				RSqAdj(j) = 100 * new_qof(percep_cv.index_rSqBar)
+				RSqCV(j) = 100 * cv_result(percep_cv.index_rSq).mean
+			}
+		}
+		val plot_mat = new MatrixD (3, x.dim2-1)
+		plot_mat.update(0, RSqAdj(1 until x.dim2))
+		plot_mat.update(1, RSqNormal(1 until x.dim2))
+		plot_mat.update(2, RSqCV(1 until x.dim2))
+		new PlotM(n, plot_mat, lines=true).saveImage("Perceptron.png")
+		banner ("Successfully implemented Perceptron!")
+	
 	}
 
 	def neuralnet_3l(x: MatriD, y: MatriD, activation_f0: AFF, hp: HyperParameter) {
@@ -219,6 +263,26 @@ object Project2 extends App {
 			}
 		}
 		else if (model == "2") {
+			val (x_initial, y_initial) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
+			val x = VectorD.one (x_initial.dim1) +^: x_initial	// Appending 1 column to x
+			val hp = new HyperParameter
+			hp += ("eta", 0.1, 0.1)
+			hp += ("bSize", 10, 10)
+			hp += ("maxEpochs", 10000, 10000)
+
+			println("-"*75)
+			println ("Select Activation Function : \n\t 1. Identity \n\t 2. Sigmoid ")
+			println("-"*75)
+			val function_choice = scala.io.StdIn.readLine()
+			if (function_choice == "1"){
+			perceptron(x, y_initial, activation_f1 = f_id, hp)	// Implementing perceptron with 'id' activation function
+			}
+			else if (function_choice == "2"){
+			perceptron(x, y_initial, activation_f1 = f_sigmoid, hp)	// Implementing perceptron with 'sigmoid' activation function
+			}
+			else {
+				println("Invalid choice!")
+			}
 
 		}
 		else if (model == "3") {
