@@ -1,32 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:138:40: an expression of type Null is ineligible for implicit conversion[0m
-[0m[[0m[31merror[0m] [0m[0mError occurred in an application involving default arguments.[0m
-[0m[[0m[31merror[0m] [0m[0m		val nn_3l = NeuralNet_3L(x :^+ y, 5, null, hp, activation_f0)[0m
-[0m[[0m[31merror[0m] [0m[0m		                                     ^[0m
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:138:37: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Int(5)[0m
-[0m[[0m[31merror[0m] [0m[0m required: scalation.analytics.Strings[0m
-[0m[[0m[31merror[0m] [0m[0m    (which expands to)  Array[String][0m
-[0m[[0m[31merror[0m] [0m[0m		val nn_3l = NeuralNet_3L(x :^+ y, 5, null, hp, activation_f0)[0m
-[0m[[0m[31merror[0m] [0m[0m		                                  ^[0m
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:150:16: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Any[0m
-[0m[[0m[31merror[0m] [0m[0m required: Int[0m
-[0m[[0m[31merror[0m] [0m[0m				fs_cols += add_var[0m
-[0m[[0m[31merror[0m] [0m[0m				           ^[0m
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:152:48: an expression of type Null is ineligible for implicit conversion[0m
-[0m[[0m[31merror[0m] [0m[0mError occurred in an application involving default arguments.[0m
-[0m[[0m[31merror[0m] [0m[0m				val nn_3l_cv = NeuralNet_3L(x_cv :^+ y, 5, null, hp, activation_f0)[0m
-[0m[[0m[31merror[0m] [0m[0m				                                           ^[0m
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:152:45: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Int(5)[0m
-[0m[[0m[31merror[0m] [0m[0m required: scalation.analytics.Strings[0m
-[0m[[0m[31merror[0m] [0m[0m    (which expands to)  Array[String][0m
-[0m[[0m[31merror[0m] [0m[0m				val nn_3l_cv = NeuralNet_3L(x_cv :^+ y, 5, null, hp, activation_f0)[0m
-[0m[[0m[31merror[0m] [0m[0m				                                        ^[0m
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:154:33: Any does not take parameters[0m
-[0m[[0m[31merror[0m] [0m[0m				RSqNormal(j) = 100 * new_qof(fit.index_rSq)[0m
-[0m[[0m[31merror[0m] [0m[0m				                            ^[0m
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:155:30: Any does not take parameters[0m
-[0m[[0m[31merror[0m] [0m[0m				RSqAdj(j) = 100 * new_qof(fit.index_rSqBar)[0m
-[0m[[0m[31merror[0m] [0m[0m				                         ^[0m
-[0m[[0m[31merror[0m] [0m[0m7 errors found[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:156:20: not found: value NeuralNet_XL_Custom[0m
+[0m[[0m[31merror[0m] [0m[0m				val nn_xl_cv = NeuralNet_XL_Custom(x_cv :^+ y, null, null, hp, activation_f)[0m
+[0m[[0m[31merror[0m] [0m[0m				               ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

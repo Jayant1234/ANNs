@@ -33,17 +33,8 @@ class Exception1{
 }
 
 
-//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-/** Defining NeuralNet_XL class to input activation function array as parameter
-*/
-class NeuralNet_XL_Custom (x: MatriD, y: MatriD,
-                    private var nz: Array [Int] = null,
-                    fname_ : Strings = null, hparam: HyperParameter = Optimizer.hp,
-                    f: Array [AFF])
-      extends NeuralNet_XL(x, y, nz, fname_, hparam, f) {}
-
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-/** The 'PerceptronTest' object uses the pre-defined MatrixD, Regression, Perceptron
+/** The 'Project2' object uses the pre-defined MatrixD, Regression, Perceptron
 * NeuralNet_3L and NeuralNet_XL classes to perform regression and subsequent analysis 
 * on different numerical datasets, in the 'data' folder.  
 *  > "sbt run" in the Scalation folder containing the build file to run the program.
@@ -146,9 +137,9 @@ object Project2 extends App {
 		banner ("Successfully implemented NeuralNet_3L!")
 	}
 
-	def neuralnet_xl(x: MatriD, y: MatriD, activation_f: Array [AFF], hp: HyperParameter) {
+	def neuralnet_xl(x: MatriD, y: VectoD, activation_f: Array [AFF], hp: HyperParameter) {
 		banner("Implementing NeuralNetXL...")
-		val nn_xl = new NeuralNet_XL_Custom(x, y, f = activation_f, hparam = hp)
+		val nn_xl = NeuralNet_XL(x :^+ y, null, null, hp, activation_f)
 		nn_xl.train ().eval ()
 		val fit = nn_xl.fitA(0)
 		val fs_cols = Set(0)				// Selected features 
@@ -162,7 +153,7 @@ object Project2 extends App {
 			if (add_var != -1) {
 				fs_cols += add_var
 				val x_cv = x.selectCols(fs_cols.toArray)	// Obtaining X-matrix for selected features
-				val nn_xl_cv = new NeuralNet_XL_Custom(x_cv, y, f = activation_f, hparam = hp)
+				val nn_xl_cv = NeuralNet_XL(x_cv :^+ y, null, null, hp, activation_f)
 				val cv_result = nn_xl_cv.crossVal()
 				RSqNormal(j) = 100 * new_qof(fit.index_rSq)
 				RSqAdj(j) = 100 * new_qof(fit.index_rSqBar)
@@ -262,7 +253,6 @@ object Project2 extends App {
 		else if (model == "3") {
 			val (x_initial, y) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
 			val x = VectorD.one (x_initial.dim1) +^: x_initial	// Appending 1 column to x
-			//val y = MatrixD (Seq (y_initial))
 			val hp = new HyperParameter
 			hp += ("eta", 0.01, 0.01)
 			hp += ("bSize", 10, 10)
@@ -287,9 +277,8 @@ object Project2 extends App {
 			}
 		}
 		else if (model == "4") {
-			val (x_initial, y_initial) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
+			val (x_initial, y) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
 			val x = VectorD.one (x_initial.dim1) +^: x_initial	// Appending 1 column to x
-			val y = MatrixD (Seq (y_initial))
 			val hp = new HyperParameter
 			hp += ("eta", 0.1, 0.1)
 			hp += ("bSize", 10, 10)
