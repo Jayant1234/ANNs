@@ -32,33 +32,6 @@ class Exception1{
 	}
 }
 
-//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-/** Defining TranRegression class to input 'tran' and 'itran' as parameters
-*/
-class TranRegression (x: MatriD, y: VectoD, fname_ : Strings = null,
-                      tran: FunctionS2S , itran: FunctionS2S,
-                      technique: RegTechnique = QR)
-      extends Regression (x, y.map (tran), fname_, null, technique) {}
-
-
-//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-/** Defining Perceptron class to input 'hparam' and 'f1' as parameters
-*/
-
-class Perceptron_Custom (x: MatriD, y: VectoD,
-                  fname_ : Strings = null, hparam: HyperParameter,
-                  f1: AFF)
-      extends Perceptron (x, y, fname_, hparam){}
-
-//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-/** Defining NeuralNet_3L class to input 'f0' activation function as parameter
-*/
-
-class NeuralNet_3L_Custom (x: MatriD, y: MatriD,
-                    private var nz: Int = 5,
-                    fname_ : Strings = null, hparam: HyperParameter,
-                    f0: AFF, f1: AFF = f_lreLU)
-      extends NeuralNet_3L(x, y, nz, fname_, hparam, f0, f1) {}
 
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 /** Defining NeuralNet_XL class to input activation function array as parameter
@@ -81,7 +54,7 @@ object Project2 extends App {
 
 	def tran_regression(x: MatriD, y: VectoD, transform_function: FunctionS2S, transform_inverse: FunctionS2S){
 		banner ("Implementing Transformed Regression... ")
-		val	tran_reg = new TranRegression (x, y, tran = transform_function, itran = transform_inverse)
+		val	tran_reg = new TranRegression (x, y, null, transform_function, transform_inverse)
 		val fs_cols = Set(0)				// Selected features 
 		val RSqNormal = new VectorD (x.dim2)
 		val RSqAdj = new VectorD (x.dim2) 
@@ -95,7 +68,7 @@ object Project2 extends App {
 				RSqNormal(j) = 100 * new_qof(0)	
 				RSqAdj(j) = 100 * new_qof(7)
 				val x_cv = x.selectCols(fs_cols.toArray)	// Obtaining X-matrix for selected features
-				val tran_reg_cv = new TranRegression(x_cv, y, tran = transform_function, itran = transform_inverse)
+				val tran_reg_cv = new TranRegression(x_cv, y, null, transform_function, transform_inverse)
 				val cv_result = tran_reg_cv.crossVal()
 				RSqCV(j) = 100 * cv_result(tran_reg_cv.index_rSq).mean
 			}		
@@ -110,9 +83,9 @@ object Project2 extends App {
 
 		
 	def perceptron(x: MatriD, y: VectoD, activation_f1: AFF, hp: HyperParameter ){
-	  banner ("Implementing Perceptron... ")
-		val	percep = new Perceptron_Custom (x, y, f1 = activation_f1, hparam = hp)
-	  percep.train ().eval ()
+		banner ("Implementing Perceptron... ")
+		val	percep = Perceptron (x :^+ y, null, hp, activation_f1)
+		percep.train ().eval ()
 		val fs_cols = Set(0)				// Selected features 
 		val RSqNormal = new VectorD (x.dim2)
 		val RSqAdj = new VectorD (x.dim2) 
@@ -125,11 +98,12 @@ object Project2 extends App {
 				fs_cols += add_var
 				val x_cv = x.selectCols(fs_cols.toArray)	// Obtaining X-matrix for selected features
 			//	val nn_j   = Perceptron (x_cols :^+ y, f1 = f_)
-				val percep_cv = new Perceptron_Custom(x_cv, y, f1 = activation_f1, hparam = hp)
+				val percep_cv = Perceptron(x_cv :^+ y, null, hp, activation_f1)
 				val cv_result = percep_cv.crossVal()
 				RSqNormal(j) = 100 * new_qof(percep_cv.index_rSq)
 				RSqAdj(j) = 100 * new_qof(percep_cv.index_rSqBar)
 				RSqCV(j) = 100 * cv_result(percep_cv.index_rSq).mean
+				println(RSqNormal(j), RSqAdj(j), RSqCV(j))
 			}
 		}
 		val plot_mat = new MatrixD (3, x.dim2-1)
@@ -141,9 +115,9 @@ object Project2 extends App {
 	
 	}
 
-	def neuralnet_3l(x: MatriD, y: MatriD, activation_f0: AFF, hp: HyperParameter) {
+	def neuralnet_3l(x: MatriD, y: VectoD, activation_f0: AFF, hp: HyperParameter) {
 		banner("Implementing NeuralNet3L...")
-		val nn_3l = new NeuralNet_3L_Custom(x, y, f0 = activation_f0, hparam = hp)
+		val nn_3l = NeuralNet_3L(x :^+ y, null, -1, hp, activation_f0)
 		nn_3l.train ().eval ()
 		val fit = nn_3l.fitA(0)
 		val fs_cols = Set(0)				// Selected features 
@@ -157,7 +131,7 @@ object Project2 extends App {
 			if (add_var != -1) {
 				fs_cols += add_var
 				val x_cv = x.selectCols(fs_cols.toArray)	// Obtaining X-matrix for selected features
-				val nn_3l_cv = new NeuralNet_3L_Custom(x_cv, y, f0 = activation_f0, hparam = hp)
+				val nn_3l_cv = NeuralNet_3L(x_cv :^+ y, null, -1, hp, activation_f0)
 				val cv_result = nn_3l_cv.crossVal()
 				RSqNormal(j) = 100 * new_qof(fit.index_rSq)
 				RSqAdj(j) = 100 * new_qof(fit.index_rSqBar)
@@ -268,7 +242,7 @@ object Project2 extends App {
 			val hp = new HyperParameter
 			hp += ("eta", 0.1, 0.1)
 			hp += ("bSize", 10, 10)
-			hp += ("maxEpochs", 10000, 10000)
+			hp += ("maxEpochs", 1000, 1000)
 
 			println("-"*75)
 			println ("Select Activation Function : \n\t 1. Identity \n\t 2. Sigmoid ")
@@ -286,13 +260,13 @@ object Project2 extends App {
 
 		}
 		else if (model == "3") {
-			val (x_initial, y_initial) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
+			val (x_initial, y) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
 			val x = VectorD.one (x_initial.dim1) +^: x_initial	// Appending 1 column to x
-			val y = MatrixD (Seq (y_initial))
+			//val y = MatrixD (Seq (y_initial))
 			val hp = new HyperParameter
-			hp += ("eta", 0.1, 0.1)
+			hp += ("eta", 0.01, 0.01)
 			hp += ("bSize", 10, 10)
-			hp += ("maxEpochs", 10000, 10000)
+			hp += ("maxEpochs", 1000, 1000)
 
 			println("-"*75)
 			println ("Select Activation Function:\n\t 1. Rectified Linear Unit \n\t 2. Leaky Rectified Linear Unit \n\t 3. Sigmoid ")
@@ -319,7 +293,7 @@ object Project2 extends App {
 			val hp = new HyperParameter
 			hp += ("eta", 0.1, 0.1)
 			hp += ("bSize", 10, 10)
-			hp += ("maxEpochs", 10000, 10000)
+			hp += ("maxEpochs", 1000, 1000)
 
 			println("-"*75)
 			println ("Select Activation Function for 1st Layer:\n\t 1. Rectified Linear Unit \n\t 2. Leaky Rectified Linear Unit \n\t 3. Sigmoid ")
