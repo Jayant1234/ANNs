@@ -43,7 +43,7 @@ class Exception1{
 */			
 object Project2 extends App {
 
-	def tran_regression(x: MatriD, y: VectoD, transform_function: FunctionS2S, transform_inverse: FunctionS2S){
+	def tran_regression(i: Int, x: MatriD, y: VectoD, transform_function: FunctionS2S, transform_inverse: FunctionS2S){
 		banner ("Implementing Transformed Regression... ")
 		val	tran_reg = new TranRegression (x, y, null, transform_function, transform_inverse)
 		val fs_cols = Set(0)				// Selected features 
@@ -68,12 +68,12 @@ object Project2 extends App {
 		plot_mat.update(0, RSqAdj(1 until x.dim2))
 		plot_mat.update(1, RSqNormal(1 until x.dim2))
 		plot_mat.update(2, RSqCV(1 until x.dim2))
-		new PlotM(n, plot_mat, lines=true).saveImage("tran_regression.png")
+		new PlotM(n, plot_mat, lines=true).saveImage("tran_" + (i).toString + ".png")
 		banner ("Successfully implemented Transformed Regression!")
 	}
 
 		
-	def perceptron(x: MatriD, y: VectoD, activation_f1: AFF, hp: HyperParameter ){
+	def perceptron(i: Int, x: MatriD, y: VectoD, activation_f1: AFF, hp: HyperParameter ){
 		banner ("Implementing Perceptron... ")
 		val	percep = Perceptron (x :^+ y, null, hp, activation_f1)
 		percep.train ().eval ()
@@ -101,12 +101,12 @@ object Project2 extends App {
 		plot_mat.update(0, RSqAdj(1 until x.dim2))
 		plot_mat.update(1, RSqNormal(1 until x.dim2))
 		plot_mat.update(2, RSqCV(1 until x.dim2))
-		new PlotM(n, plot_mat, lines=true).saveImage("Perceptron.png")
+		new PlotM(n, plot_mat, lines=true).saveImage("Perceptron_" + (i).toString + ".png")
 		banner ("Successfully implemented Perceptron!")
 	
 	}
 
-	def neuralnet_3l(x: MatriD, y:VectoD, activation_f0: AFF, hp: HyperParameter) {
+	def neuralnet_3l(i: Int, x: MatriD, y:VectoD, activation_f0: AFF, hp: HyperParameter) {
 		banner("Implementing NeuralNet3L...")
 		val nn_3l = NeuralNet_3L(x :^+ y, null, -1, hp, activation_f0, f_lreLU)
 		nn_3l.train ().eval ()
@@ -134,11 +134,11 @@ object Project2 extends App {
 		plot_mat.update(0, RSqAdj(1 until x.dim2))
 		plot_mat.update(1, RSqNormal(1 until x.dim2))
 		plot_mat.update(2, RSqCV(1 until x.dim2))
-		new PlotM(n, plot_mat, lines=true).saveImage("neuralnet_3l.png")
+		new PlotM(n, plot_mat, lines=true).saveImage("neuralnet_" + (i).toString +"_3l.png")
 		banner ("Successfully implemented NeuralNet_3L!")
 	}
 
-	def neuralnet_xl(x: MatriD, y: VectoD, activation_f: Array [AFF], hp: HyperParameter) {
+	def neuralnet_xl(i: Int, x: MatriD, y: VectoD, activation_f: Array [AFF], hp: HyperParameter) {
 		banner("Implementing NeuralNetXL...")
 		val nn_xl = NeuralNet_XL(x :^+ y, null, null, hp, activation_f)
 		nn_xl.train ().eval ()
@@ -165,7 +165,7 @@ object Project2 extends App {
 		plot_mat.update(0, RSqAdj(1 until x.dim2))
 		plot_mat.update(1, RSqNormal(1 until x.dim2))
 		plot_mat.update(2, RSqCV(1 until x.dim2))
-		new PlotM(n, plot_mat, lines=true).saveImage("neuralnet_xl.png")
+		new PlotM(n, plot_mat, lines=true).saveImage("neuralnet_"+ (i).toString +"_xl.png")
 		banner ("Successfully implemented NeuralNet_XL!")
 	}
 	
@@ -208,24 +208,38 @@ object Project2 extends App {
 		if (model == "1") {
 			val (x_initial, y) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
 			val x = VectorD.one (x_initial.dim1) +^: x_initial	// Appending 1 column to x
-			println("-"*75)
-			println ("Select Transform Function:\n\t 1. log \n\t 2. sqrt \n\t 3. ~^2 \n\t 4. exp")
-			println("-"*75)
-			val function_choice = scala.io.StdIn.readLine()
-			if (function_choice == "1"){
-				tran_regression(x, y, transform_function = log, transform_inverse = exp)	// Implementing Transformed Regression Model with 'log' transform function
-			}
-			else if (function_choice == "2"){
-				tran_regression(x, y, transform_function = sqrt , transform_inverse = sq)	// Implementing Transformed Regression Model with 'sqrt' transform function
-			}
-			else if (function_choice == "3"){
-				tran_regression(x, y, transform_function = sq, transform_inverse = sqrt)	// Implementing Transformed Regression Model with 'sq' transform function
-			}
-			else if (function_choice == "4"){
-				tran_regression(x, y, transform_function = exp, transform_inverse = log)	// Implementing Transformed Regression Model with 'exp' transform function
-			}
-			else {
-				println("Invalid choice!")
+			//println("-"*75)
+			//println ("Select Transform Function:\n\t 1. log \n\t 2. sqrt \n\t 3. ~^2 \n\t 4. exp")
+			//println("-"*75)
+			//val function_choice = scala.io.StdIn.readLine()
+			//if (function_choice == "1"){
+			//	tran_regression(x, y, transform_function = log, transform_inverse = exp)	// Implementing Transformed Regression Model with 'log' transform function
+			//}
+			//else if (function_choice == "2"){
+			//	tran_regression(x, y, transform_function = sqrt , transform_inverse = sq)	// Implementing Transformed Regression Model with 'sqrt' transform function
+			//}
+			//else if (function_choice == "3"){
+			//	tran_regression(x, y, transform_function = sq, transform_inverse = sqrt)	// Implementing Transformed Regression Model with 'sq' transform function
+			//}
+			//else if (function_choice == "4"){
+			//	tran_regression(x, y, transform_function = exp, transform_inverse = log)	// Implementing Transformed Regression Model with 'exp' transform function
+			//}
+			//else {
+			//	println("Invalid choice!")
+			//}
+			for(function_choice <- 1 to 5) {
+				if (function_choice == 1){
+					tran_regression(function_choice, x, y, transform_function = log, transform_inverse = exp)	// Implementing Transformed Regression Model with 'log' transform function
+				}
+				else if (function_choice == 2){
+					tran_regression(function_choice, x, y, transform_function = sqrt , transform_inverse = sq)	// Implementing Transformed Regression Model with 'sqrt' transform function
+				}
+				else if (function_choice == 3){
+					tran_regression(function_choice, x, y, transform_function = sq, transform_inverse = sqrt)	// Implementing Transformed Regression Model with 'sq' transform function
+				}
+				else if (function_choice == 4){
+					tran_regression(function_choice, x, y, transform_function = exp, transform_inverse = log)	// Implementing Transformed Regression Model with 'exp' transform function
+				}
 			}
 		}
 		else if (model == "2") {
@@ -236,20 +250,27 @@ object Project2 extends App {
 			hp += ("bSize", 10, 10)
 			hp += ("maxEpochs", 1000, 1000)
 
-			println("-"*75)
-			println ("Select Activation Function : \n\t 1. Identity \n\t 2. Sigmoid ")
-			println("-"*75)
-			val function_choice = scala.io.StdIn.readLine()
-			if (function_choice == "1"){
-			perceptron(x, y_initial, activation_f1 = f_id, hp)	// Implementing perceptron with 'id' activation function
+			//println("-"*75)
+			//println ("Select Activation Function : \n\t 1. Identity \n\t 2. Sigmoid ")
+			//println("-"*75)
+			//val function_choice = scala.io.StdIn.readLine()
+			//if (function_choice == "1"){
+			//perceptron(x, y_initial, activation_f1 = f_id, hp)	// Implementing perceptron with 'id' activation function
+			//}
+			//else if (function_choice == "2"){
+			//perceptron(x, y_initial, activation_f1 = f_sigmoid, hp)	// Implementing perceptron with 'sigmoid' activation function
+			//}
+			//else {
+			//	println("Invalid choice!")
+			//}
+			for(function_choice <- 1 to 3) {
+				if (function_choice == 1){
+					perceptron(function_choice, x, y_initial, activation_f1 = f_id, hp)	// Implementing perceptron with 'id' activation function
+				}
+				else if (function_choice == 2){
+					perceptron(function_choice, x, y_initial, activation_f1 = f_sigmoid, hp)	// Implementing perceptron with 'sigmoid' activation function
+				}
 			}
-			else if (function_choice == "2"){
-			perceptron(x, y_initial, activation_f1 = f_sigmoid, hp)	// Implementing perceptron with 'sigmoid' activation function
-			}
-			else {
-				println("Invalid choice!")
-			}
-
 		}
 		else if (model == "3") {
 			val (x, y) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
@@ -259,23 +280,35 @@ object Project2 extends App {
 			hp += ("bSize", 10, 10)
 			hp += ("maxEpochs", 1000, 1000)
 
-			println("-"*75)
-			println ("Select Activation Function:\n\t 1. Rectified Linear Unit \n\t 2. Leaky Rectified Linear Unit \n\t 3. Sigmoid ")
-			println("-"*75)
-			val function_choice = scala.io.StdIn.readLine()
+			//println("-"*75)
+			//println ("Select Activation Function:\n\t 1. Rectified Linear Unit \n\t 2. Leaky Rectified Linear Unit \n\t 3. Sigmoid ")
+			//println("-"*75)
+			//val function_choice = scala.io.StdIn.readLine()
 
-			if (function_choice == "1"){
-				neuralnet_3l(x, y, activation_f0 = f_reLU, hp)	// Implementing NeuralNet_3L with 'reLU' activation function
+			//if (function_choice == "1"){
+			//	neuralnet_3l(x, y, activation_f0 = f_reLU, hp)	// Implementing NeuralNet_3L with 'reLU' activation function
+			//}
+			//else if (function_choice == "2"){
+			//	neuralnet_3l(x, y, activation_f0 = f_lreLU, hp)	// Implementing NeuralNet_3L with 'lreLU' activation function
+			//}
+			//else if (function_choice == "3"){
+			//	neuralnet_3l(x, y, activation_f0 = f_sigmoid, hp)	// Implementing NeuralNet_3L with 'sigmoid' activation function
+			//}
+			//else {
+			//	println("Invalid choice!")
+			//}
+			for(function_choice <- 1 to 4) {
+				if (function_choice == 1){
+					neuralnet_3l(function_choice, x, y, activation_f0 = f_reLU, hp)	// Implementing NeuralNet_3L with 'reLU' activation function
+				}
+				else if (function_choice == 2){
+					neuralnet_3l(function_choice, x, y, activation_f0 = f_lreLU, hp)	// Implementing NeuralNet_3L with 'lreLU' activation function
+				}
+				else if (function_choice == 3){
+					neuralnet_3l(function_choice, x, y, activation_f0 = f_sigmoid, hp)	// Implementing NeuralNet_3L with 'sigmoid' activation function
+				}
 			}
-			else if (function_choice == "2"){
-				neuralnet_3l(x, y, activation_f0 = f_lreLU, hp)	// Implementing NeuralNet_3L with 'lreLU' activation function
-			}
-			else if (function_choice == "3"){
-				neuralnet_3l(x, y, activation_f0 = f_sigmoid, hp)	// Implementing NeuralNet_3L with 'sigmoid' activation function
-			}
-			else {
-				println("Invalid choice!")
-			}
+
 		}
 		else if (model == "4") {
 			val (x, y) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
@@ -284,45 +317,75 @@ object Project2 extends App {
 			hp += ("bSize", 10, 10)
 			hp += ("maxEpochs", 1000, 1000)
 
-			println("-"*75)
-			println ("Select Activation Function for 1st Layer:\n\t 1. Rectified Linear Unit \n\t 2. Leaky Rectified Linear Unit \n\t 3. Sigmoid ")
-			println("-"*75)
-			val function_1_choice = scala.io.StdIn.readLine()
+			//println("-"*75)
+			//println ("Select Activation Function for 1st Layer:\n\t 1. Rectified Linear Unit \n\t 2. Leaky Rectified Linear Unit \n\t 3. Sigmoid ")
+			//println("-"*75)
+			//val function_1_choice = scala.io.StdIn.readLine()
 
-			println("-"*75)
-			println ("Select Activation Function for 2nd Layer:\n\t 1. Rectified Linear Unit \n\t 2. Leaky Rectified Linear Unit \n\t 3. Sigmoid ")
-			println("-"*75)
-			val function_2_choice = scala.io.StdIn.readLine()
+			//println("-"*75)
+			//println ("Select Activation Function for 2nd Layer:\n\t 1. Rectified Linear Unit \n\t 2. Leaky Rectified Linear Unit \n\t 3. Sigmoid ")
+			//println("-"*75)
+			//val function_2_choice = scala.io.StdIn.readLine()
 
-			if (function_1_choice == "1" && function_2_choice == "1"){
-				neuralnet_xl(x, y, activation_f=  Array (f_reLU, f_reLU, f_lreLU), hp)	// Implementing NeuralNet_XL with 'reLU' and 'reLU' activation functions
-			}
-			else if (function_1_choice == "1" && function_2_choice == "2"){
-				neuralnet_xl(x, y, activation_f=  Array (f_reLU, f_lreLU, f_lreLU), hp)	// Implementing NeuralNet_XL with 'reLU' and 'lreLU' activation functions
-			}
-			else if (function_1_choice == "1" && function_2_choice == "3"){
-				neuralnet_xl(x, y, activation_f= Array (f_reLU, f_sigmoid, f_lreLU), hp)	// Implementing NeuralNet_XL with 'reLU' and 'sigmoid' activation functions
-			}
-			else if (function_1_choice == "2" && function_2_choice == "1"){
-				neuralnet_xl(x, y, activation_f=  Array (f_lreLU, f_reLU, f_lreLU), hp)	// Implementing NeuralNet_XL with 'lrelu' and 'relu' activation function
-			}
-			else if (function_1_choice == "2" && function_2_choice == "2"){
-				neuralnet_xl(x, y, activation_f=  Array (f_lreLU, f_lreLU, f_lreLU), hp)	// Implementing NeuralNet_XL with 'lrelu' and 'lrelu' activation function
-			}
-			else if (function_1_choice == "2" && function_2_choice == "3"){
-				neuralnet_xl(x, y, activation_f=  Array (f_lreLU, f_sigmoid, f_lreLU), hp)	// Implementing NeuralNet_3L with 'lrelu' and 'sigmoid' activation function
-			}
-			else if (function_1_choice == "3" && function_2_choice == "1"){
-				neuralnet_xl(x, y, activation_f=  Array (f_sigmoid, f_reLU, f_lreLU), hp)	// Implementing NeuralNet_3L with 'sigmoid' and 'relu' activation function
-			}
-			else if (function_1_choice == "3" && function_2_choice == "2"){
-				neuralnet_xl(x, y, activation_f=  Array (f_sigmoid, f_lreLU, f_lreLU), hp)	// Implementing NeuralNet_3L with 'sigmoid' and 'lrelu' activation function
-			}
-			else if (function_1_choice == "3" && function_2_choice == "3"){
-				neuralnet_xl(x, y, activation_f= Array (f_sigmoid, f_sigmoid, f_lreLU), hp)	// Implementing NeuralNet_3L with 'sigmoid' and 'sigmoid' activation function
-			}
-			else {
-				println("Invalid choice!")
+			//if (function_1_choice == "1" && function_2_choice == "1"){
+			//	neuralnet_xl(x, y, activation_f=  Array (f_reLU, f_reLU, f_lreLU), hp)	// Implementing NeuralNet_XL with 'reLU' and 'reLU' activation functions
+			//}
+			//else if (function_1_choice == "1" && function_2_choice == "2"){
+			//	neuralnet_xl(x, y, activation_f=  Array (f_reLU, f_lreLU, f_lreLU), hp)	// Implementing NeuralNet_XL with 'reLU' and 'lreLU' activation functions
+			//}
+			//else if (function_1_choice == "1" && function_2_choice == "3"){
+			//	neuralnet_xl(x, y, activation_f= Array (f_reLU, f_sigmoid, f_lreLU), hp)	// Implementing NeuralNet_XL with 'reLU' and 'sigmoid' activation functions
+			//}
+			//else if (function_1_choice == "2" && function_2_choice == "1"){
+			//	neuralnet_xl(x, y, activation_f=  Array (f_lreLU, f_reLU, f_lreLU), hp)	// Implementing NeuralNet_XL with 'lrelu' and 'relu' activation function
+			//}
+			//else if (function_1_choice == "2" && function_2_choice == "2"){
+			//	neuralnet_xl(x, y, activation_f=  Array (f_lreLU, f_lreLU, f_lreLU), hp)	// Implementing NeuralNet_XL with 'lrelu' and 'lrelu' activation function
+			//}
+			//else if (function_1_choice == "2" && function_2_choice == "3"){
+			//	neuralnet_xl(x, y, activation_f=  Array (f_lreLU, f_sigmoid, f_lreLU), hp)	// Implementing NeuralNet_3L with 'lrelu' and 'sigmoid' activation function
+			//}
+			//else if (function_1_choice == "3" && function_2_choice == "1"){
+			//	neuralnet_xl(x, y, activation_f=  Array (f_sigmoid, f_reLU, f_lreLU), hp)	// Implementing NeuralNet_3L with 'sigmoid' and 'relu' activation function
+			//}
+			//else if (function_1_choice == "3" && function_2_choice == "2"){
+			//	neuralnet_xl(x, y, activation_f=  Array (f_sigmoid, f_lreLU, f_lreLU), hp)	// Implementing NeuralNet_3L with 'sigmoid' and 'lrelu' activation function
+			//}
+			//else if (function_1_choice == "3" && function_2_choice == "3"){
+			//	neuralnet_xl(x, y, activation_f= Array (f_sigmoid, f_sigmoid, f_lreLU), hp)	// Implementing NeuralNet_3L with 'sigmoid' and 'sigmoid' activation function
+			//}
+			//else {
+			//	println("Invalid choice!")
+			//}
+
+			for(function_choice <- 1 to 10) {
+				if (function_choice == 1){
+					neuralnet_xl(function_choice, x, y, activation_f=  Array (f_reLU, f_reLU, f_lreLU), hp)	// Implementing NeuralNet_XL with 'reLU' and 'reLU' activation functions
+				}
+				else if (function_choice == 2){
+					neuralnet_xl(function_choice, x, y, activation_f=  Array (f_reLU, f_lreLU, f_lreLU), hp)	// Implementing NeuralNet_3L with 'lreLU' activation function
+				}
+				else if (function_choice == 3){
+					neuralnet_xl(function_choice, x, y, activation_f= Array (f_reLU, f_sigmoid, f_lreLU), hp)	// Implementing NeuralNet_3L with 'sigmoid' activation function
+				}
+				else if (function_choice == 4){
+					neuralnet_xl(function_choice, x, y, activation_f=  Array (f_lreLU, f_reLU, f_lreLU), hp)	// Implementing NeuralNet_XL with 'lrelu' and 'relu' activation function
+				}
+				else if (function_choice == 5){
+					neuralnet_xl(function_choice, x, y, activation_f=  Array (f_lreLU, f_lreLU, f_lreLU), hp)	// Implementing NeuralNet_XL with 'lrelu' and 'lrelu' activation function
+				}
+				else if (function_choice == 6){
+					neuralnet_xl(function_choice, x, y, activation_f=  Array (f_lreLU, f_sigmoid, f_lreLU), hp)	// Implementing NeuralNet_3L with 'lrelu' and 'sigmoid' activation function
+				}
+				else if (function_choice == 7){
+					neuralnet_xl(function_choice, x, y, activation_f=  Array (f_sigmoid, f_reLU, f_lreLU), hp)	// Implementing NeuralNet_3L with 'sigmoid' and 'relu' activation function
+				}
+				else if (function_choice == 8){
+					neuralnet_xl(function_choice, x, y, activation_f=  Array (f_sigmoid, f_lreLU, f_lreLU), hp)	// Implementing NeuralNet_3L with 'sigmoid' and 'lrelu' activation function
+				}
+				else if (function_choice == 9){
+					neuralnet_xl(function_choice, x, y, activation_f= Array (f_sigmoid, f_sigmoid, f_lreLU), hp)	// Implementing NeuralNet_3L with 'sigmoid' and 'sigmoid' activation function
+				}
 			}
 
 		}
