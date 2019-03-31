@@ -106,10 +106,11 @@ object Project2 extends App {
 	
 	}
 
-	def neuralnet_3l(x: MatriD, y: VectoD, activation_f0: AFF, hp: HyperParameter) {
+	def neuralnet_3l(x: MatriD, y:VectoD, activation_f0: AFF, hp: HyperParameter) {
 		banner("Implementing NeuralNet3L...")
-		val nn_3l = NeuralNet_3L(x :^+ y, null, -1, hp, activation_f0)
+		val nn_3l = NeuralNet_3L(x :^+ y, null, -1, hp, activation_f0, f_lreLU)
 		nn_3l.train ().eval ()
+		println(nn_3l.report)
 		val fit = nn_3l.fitA(0)
 		val fs_cols = Set(0)				// Selected features 
 		val RSqNormal = new VectorD (x.dim2)
@@ -122,7 +123,7 @@ object Project2 extends App {
 			if (add_var != -1) {
 				fs_cols += add_var
 				val x_cv = x.selectCols(fs_cols.toArray)	// Obtaining X-matrix for selected features
-				val nn_3l_cv = NeuralNet_3L(x_cv :^+ y, null, -1, hp, activation_f0)
+				val nn_3l_cv = NeuralNet_3L(x_cv :^+ y, null, -1, hp, activation_f0, f_lreLU)
 				val cv_result = nn_3l_cv.crossVal()
 				RSqNormal(j) = 100 * new_qof(fit.index_rSq)
 				RSqAdj(j) = 100 * new_qof(fit.index_rSqBar)
@@ -251,10 +252,10 @@ object Project2 extends App {
 
 		}
 		else if (model == "3") {
-			val (x_initial, y) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
-			val x = VectorD.one (x_initial.dim1) +^: x_initial	// Appending 1 column to x
+			val (x, y) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
+			val xy = x :^+ y
 			val hp = new HyperParameter
-			hp += ("eta", 0.01, 0.01)
+			hp += ("eta", 0.3, 0.3)
 			hp += ("bSize", 10, 10)
 			hp += ("maxEpochs", 1000, 1000)
 
@@ -277,10 +278,9 @@ object Project2 extends App {
 			}
 		}
 		else if (model == "4") {
-			val (x_initial, y) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
-			val x = VectorD.one (x_initial.dim1) +^: x_initial	// Appending 1 column to x
+			val (x, y) = dataset.toMatriDD(1 until num_cols, 0)	// Y vector is the first column of Relation
 			val hp = new HyperParameter
-			hp += ("eta", 0.1, 0.1)
+			hp += ("eta", 0.3, 0.3)
 			hp += ("bSize", 10, 10)
 			hp += ("maxEpochs", 1000, 1000)
 

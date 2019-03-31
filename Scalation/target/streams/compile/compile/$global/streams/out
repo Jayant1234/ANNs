@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:156:20: not found: value NeuralNet_XL_Custom[0m
-[0m[[0m[31merror[0m] [0m[0m				val nn_xl_cv = NeuralNet_XL_Custom(x_cv :^+ y, null, null, hp, activation_f)[0m
-[0m[[0m[31merror[0m] [0m[0m				               ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:143:23: not found: value estat[0m
+[0m[[0m[31merror[0m] [0m[0m	            println (estat)[0m
+[0m[[0m[31merror[0m] [0m[0m	                     ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m
