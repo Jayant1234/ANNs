@@ -315,7 +315,7 @@ object Project2 extends App {
 			val hp = new HyperParameter
 			hp += ("eta", 0.3, 0.3)
 			hp += ("bSize", 10, 10)
-			hp += ("maxEpochs", 2500, 2500)
+			hp += ("maxEpochs", 1000, 1000)
 
 			//println("-"*75)
 			//println ("Select Activation Function for 1st Layer:\n\t 1. Rectified Linear Unit \n\t 2. Leaky Rectified Linear Unit \n\t 3. Sigmoid ")
