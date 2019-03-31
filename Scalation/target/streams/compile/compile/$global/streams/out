@@ -1,0 +1,7 @@
+[0m[[0m[33mwarn[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:267:25: comparing values of types Int and String using `==' will always yield false[0m
+[0m[[0m[33mwarn[0m] [0m[0m				if (function_choice == "1"){[0m
+[0m[[0m[33mwarn[0m] [0m[0m				                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mD:\Spring2019\DataScienceII\Projects\ANNs\Scalation\src\main\scala\Perceptron\perceptron.scala:270:30: comparing values of types Int and String using `==' will always yield false[0m
+[0m[[0m[33mwarn[0m] [0m[0m				else if (function_choice == "2"){[0m
+[0m[[0m[33mwarn[0m] [0m[0m				                         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m
